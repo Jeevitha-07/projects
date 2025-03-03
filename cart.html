@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Flipkart Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="index.html">Flipkart</a></div>
+        <a href="index1.html" class="back-btn">🔙 Continue Shopping</a>
+    </header>
+
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <p>Total: ₹<span id="total-price">0</span></p>
+    <a href="order.html" class="checkout-btn">Proceed to Checkout</a>
+<script>
+    function loadCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartItems = document.getElementById("cart-items");
+        let totalPrice = document.getElementById("total-price");
+
+        if (!cartItems) {
+            console.error("Cart items container not found.");
+            return;
+        }
+
+        cartItems.innerHTML = "";
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = "<p>Your cart is empty!</p>";
+            totalPrice.innerText = "0";
+            return;
+        }
+
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+            cartItems.innerHTML += `
+                <li>${item.name} x${item.quantity} - ₹${item.price * item.quantity}
+                <button onclick="removeFromCart(${item.id})">Remove</button>
+                </li>`;
+        });
+
+        totalPrice.innerText = total;
+    }
+
+    function removeFromCart(productId) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();  // Reload cart after removal
+        updateCartCount();
+    }
+
+    // Ensure `loadCart()` runs when `cart.html` loads
+    document.addEventListener("DOMContentLoaded", loadCart);
+</script>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
