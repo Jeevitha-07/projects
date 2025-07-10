@@ -1,65 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Flipkart Clone</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    table { width: 90%; margin: auto; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    img { width: 80px; }
+    .qty-btn {
+      padding: 4px 10px;
+      margin: 0 3px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button {
+      background-color: rgb(49, 194, 49);
+      padding: 8px;
+      text-align: center;
+      justify-content: center;
+
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo"><a href="index.html">Flipkart</a></div>
-        <a href="index1.html" class="back-btn">🔙 Continue Shopping</a>
-    </header>
 
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <p>Total: ₹<span id="total-price">0</span></p>
-    <a href="order.html" class="checkout-btn">Proceed to Checkout</a>
-<script>
-    function loadCart() {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        let cartItems = document.getElementById("cart-items");
-        let totalPrice = document.getElementById("total-price");
+  <header>
+    <div class="top-bar">Free Delivery Above ₹499 | Shop Now</div>
+    <nav>
+      <div class="logo">🌿 Plantigo</div>
+      <ul class="nav-links">
+        <li><a href="./main.html">Plants</a></li>
+        <li><a href="./seed.html">Seeds</a></li>
+        <li><a href="./plantcare.html">Plant Care</a></li>
+        <li><a href="./giftings.html">Gifting</a></li>
+        <li><a href="#">Blog</a></li>
+        <li class="highlight"><a href="./offerss.html">Offers</a></li>
+      </ul>
+      <div class="icons"><a href="./cart.html">🛒</a></div>
+    </nav>
+  </header>
 
-        if (!cartItems) {
-            console.error("Cart items container not found.");
-            return;
-        }
+  <h2 style="text-align:center">🛒 Your Cart</h2>
 
-        cartItems.innerHTML = "";
-        let total = 0;
+  <table id="cart-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table><br>
+  <center>><a href="./orders.html"><button>Proceed to Checkout</button></a></center>
 
-        if (cart.length === 0) {
-            cartItems.innerHTML = "<p>Your cart is empty!</p>";
-            totalPrice.innerText = "0";
-            return;
-        }
+  <h3 id="total" style="text-align:center; margin-top: 20px;"></h3>
 
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-            cartItems.innerHTML += `
-                <li>${item.name} x${item.quantity} - ₹${item.price * item.quantity}
-                <button onclick="removeFromCart(${item.id})">Remove</button>
-                </li>`;
-        });
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const tbody = document.querySelector("tbody");
+    const totalElem = document.getElementById("total");
 
-        totalPrice.innerText = total;
+    function renderCart() {
+      tbody.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
+        totalElem.innerText = "Total: ₹0";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><img src="${item.image}" alt="${item.name}"></td>
+          <td>${item.name}</td>
+          <td>
+            <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+            ${item.quantity}
+            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+          </td>
+          <td>₹${item.price}</td>
+          <td>₹${subtotal}</td>
+          <td><button class="delete-btn" onclick="removeItem(${index})">❌</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      totalElem.innerText = `Total: ₹${total}`;
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    function removeFromCart(productId) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart = cart.filter(item => item.id !== productId);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        loadCart();  // Reload cart after removal
-        updateCartCount();
+    function changeQty(index, amount) {
+      if (cart[index].quantity + amount <= 0) {
+        removeItem(index);
+      } else {
+        cart[index].quantity += amount;
+        renderCart();
+      }
     }
 
-    // Ensure `loadCart()` runs when `cart.html` loads
-    document.addEventListener("DOMContentLoaded", loadCart);
-</script>
+    function removeItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
 
+    renderCart();
+  </script>
 
-    <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant Care - Ugaoo</title>
+  <link rel="stylesheet" href="style.css">
+   <style>
+    .product-card button {
+      margin-top: 8px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .product-card button:hover {
+      background-color: #218838;
+    }
+    .product-card p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+    <header>
+  <div class="top-bar">Free Delivery Above ₹499 | Shop Now</div>
+  <nav>
+    <div class="logo">🌿 Plantigo</div>
+    <ul class="nav-links">
+       <li><a href="./main.html">Plants</a></li>
+        <li><a href="./seed.html">Seeds</a></li>
+        <li><a href="./plantcare.html">Plant Care</a></li>
+        <li><a href="./giftings.html">Gifting</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li class="highlight"><a href="./offerss.html">Offers</a></li>
+    </ul>
+    <div class="icons"><a href="./cart.html">🛒</a></div>
+  </nav>
+</header>
+
+  <main>
+    <h1 class="section-title">Plant Care</h1>
+    <p class="description">Explore plant care tools, fertilizers, and accessories to keep your plants thriving.</p>
+
+    <div class="product-grid">
+      <div class="product-card" data-name="organic fertilizer" data-price="100" data-image="organic fertilizer.jpg">
+        <img src="./organic fertilizer.jpg" alt="Care 1">
+        <p>Organic Fertilizer</p>
+         <p><strong>₹100</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+      <div class="product-card" data-name="Spray bottle" data-price="60" data-image="water Spray.jpg">
+        <img src="./water spary.jpg" alt="Care 2">
+        <p>Watering Spray Bottle</p>
+         <p><strong>₹60</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+    </div>
+  </main>
+  <script>
+  function addToCart(button) {
+    const card = button.parentElement;
+    const name = card.dataset.name;
+    const price = parseFloat(card.dataset.price);
+    const image = card.dataset.image;
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ name, price, image, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${name} added to cart!`);
+  }
+</script>
+
+</body>
+</html>

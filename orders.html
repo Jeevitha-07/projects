@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Place Order - Plantigo</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .summary {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+    .summary ul {
+      padding-left: 20px;
+    }
+    .summary li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+    <header>
+  <div class="top-bar">Free Delivery Above ₹499 | Shop Now</div>
+  <nav>
+    <div class="logo">🌿 Plantigo</div>
+    <ul class="nav-links">
+      <li><a href="./main.html">Plants</a></li>
+      <li><a href="./seed.html">Seeds</a></li>
+      <li><a href="./plantcare.html">Plant Care</a></li>
+      <li><a href="./giftings.html">Gifting</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li class="highlight"><a href="./offerss.html">Offers</a></li>
+    </ul>
+    <div class="icons"><a href="./cart.html">🛒</a></div>
+  </nav>
+</header>
+
+  <h2>Place Your Order</h2>
+
+  <form onsubmit="submitOrder(event)">
+    <label>Full Name:
+      <input type="text" id="name" required>
+    </label>
+
+    <label>Phone Number:
+      <input type="tel" id="phone" pattern="[0-9]{10}" required>
+    </label>
+
+    <label>Delivery Address:
+      <textarea id="address" required></textarea>
+    </label>
+
+    <div class="summary">
+      <h3>🛒 Cart Summary</h3>
+      <ul id="cart-items"></ul>
+      <strong id="total-price">Total: ₹0</strong>
+    </div>
+
+    <button type="submit">✅ Place Order</button>
+  </form>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartList = document.getElementById("cart-items");
+    const totalBox = document.getElementById("total-price");
+
+    let total = 0;
+    cart.forEach(item => {
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+      const li = document.createElement("li");
+      li.textContent = `${item.name} × ${item.quantity} = ₹${subtotal}`;
+      cartList.appendChild(li);
+    });
+
+    totalBox.textContent = `Total: ₹${total}`;
+
+    function submitOrder(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+
+      if (!name || !phone || !address) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      alert(`Thank you ${name}! 🎉 Your order has been placed.`);
+
+      localStorage.removeItem("cart"); // clear the cart
+      window.location.href = "./main.html"; // or redirect to thank you/home page
+    }
+  </script>
+
+</body>
+</html>

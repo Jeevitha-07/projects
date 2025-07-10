@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plantigo - Plant Shop</title>
+  <style>
+    /* Global Reset & Fonts */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: #003300;
+      color: white;
+      text-align: center;
+      padding: 6px;
+      font-size: 14px;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: white;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #006633;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      padding: 4px 6px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #00994d;
+    }
+
+    .highlight a {
+      background-color: yellow;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .icons {
+      font-size: 20px;
+    }
+
+    /* Banner */
+    .banner {
+      background: linear-gradient(to right, #a3d2ca, #5eaaa8);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .banner h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .banner p {
+      font-size: 18px;
+    }
+
+    /* Section Title & Description */
+    .section-title {
+      font-size: 28px;
+      margin: 30px;
+    }
+
+    .description {
+      font-size: 16px;
+      margin: 0 30px 20px;
+      color: #555;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 30px 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn, .sort-dropdown {
+      padding: 8px 14px;
+      border: 1px solid #ccc;
+      background-color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+
+    /* Responsive Fix */
+     @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .controls {
+        flex-direction: column;
+        gap: 10px;
+      }
+    } 
+    /* Product Grid Layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin: 0 30px 40px;
+}
+/* Product Grid Layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin: 30px;
+}
+
+/* Individual Product Card */
+.product-card {
+  position: relative;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+/* Product Image */
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Product Name */
+.product-card p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Badge Styling */
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.badge.green {
+  background-color: #28a745; /* Green */
+}
+
+.badge.red {
+  background-color: #dc3545; /* Red */
+}
+    .product-card button {
+      margin-top: 8px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .product-card button:hover {
+      background-color: #218838;
+    }
+    .product-card p {
+      margin: 5px 0;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Banner -->
+  <header>
+    <div class="top-bar">Free Delivery Above ₹499 | Shop Now</div>
+    <nav>
+      <div class="logo">🌿 Plantigo</div>
+      <ul class="nav-links">
+        <li><a href="./main.html">Plants</a></li>
+        <li><a href="./seed.html">Seeds</a></li>
+        <li><a href="./plantcare.html">Plant Care</a></li>
+        <li><a href="./giftings.html">Gifting</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li class="highlight"><a href="./offerss.html">Offers</a></li>
+      </ul>
+      <div class="icons">🔍 ₹ 👤 <a href="./cart.html">🛒</a></div>
+    </nav>
+  </header>
+
+  <!-- Offer Banner -->
+  <section class="banner">
+    <h2>Extra 10% off above ₹999 - sitewide</h2>
+    <p>Use code: <strong>RAIN10</strong></p>
+  </section>
+
+  <!-- Main Section -->
+  <main>
+    <h1 class="section-title">Plants</h1>
+    <p class="description">Plants make for the best house companions, suitable for all your moods and every aesthetic.</p>
+
+    <div class="controls">
+      <button class="filter-btn">🔽 Filter</button>
+      <select class="sort-dropdown">
+        <option>Sort by</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+      </select>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card" data-name="areca palm" data-price="80" data-image="outdoor.jpg">
+        <div class="badge green">25% OFF</div>
+        <img src="./outdoor.jpg" alt="Areca Palm">
+        <p>Areca Palm</p>
+        <p><strong>₹40</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+      <div class="product-card" data-name="Snake plant" data-price="40" data-image="outdoor1.jpg">
+        <div class="badge green">40% OFF</div>
+        <img src="./outdoor1.jpg" alt="Snake Plant">
+        <p>Snake Plant</p>
+        <p><strong>₹40</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+      <div class="product-card" data-name="peace lily" data-price="60" data-image="outdoor3.jpg">
+        <div class="badge red">2 XL @ ₹3500</div>
+        <img src="./outdoor3.jpg" alt="Peace Lily XL">
+        <p>Peace Lily XL</p>
+        <p><strong>₹40</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+      <div class="product-card" data-name="money plant" data-price="50" data-image="succulents.jpg">
+        <div class="badge green">75% OFF</div>
+        <img src="./succulents.jpg" alt="Money Plant">
+        <p>Money Plant</p>
+        <p><strong>₹40</strong></p>
+      <button onclick="addToCart(this)">🛒 Add to Cart</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  function addToCart(button) {
+    const card = button.parentElement;
+    const name = card.dataset.name;
+    const price = parseFloat(card.dataset.price);
+    const image = card.dataset.image;
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ name, price, image, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${name} added to cart!`);
+  }
+</script>
+
+
+</body>
+</html>
